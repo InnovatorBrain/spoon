@@ -252,7 +252,7 @@ class AllTeachersView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, format=None):
-        teachers = TeacherProfile.objects.all()
+        teachers = TeacherProfile.objects.filter(status="APPROVED")
         serializer = TeacherCardSerializer(teachers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 # kkkkkkkkkkkkkkkkkkkkkkkkkkk

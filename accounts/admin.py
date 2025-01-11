@@ -58,7 +58,7 @@ class StudentProfileAdmin(admin.ModelAdmin):
     user_last_name.short_description = "Last Name"
 
 class TeacherProfileAdmin(admin.ModelAdmin):
-    list_display = ["id", "user_email", "user_first_name", "user_last_name", "subject", "experience", "qualifications"]
+    list_display = ["id", "user_email", "user_first_name", "user_last_name", "subject", "experience", "qualifications", "status"]
     list_per_page = 10
     search_fields = ["user__email"]
 

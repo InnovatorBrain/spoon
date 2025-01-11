@@ -89,6 +89,13 @@ class TeacherProfile(models.Model):
     experience = models.IntegerField(null=True, blank=True)
     qualifications = models.TextField(blank=True)
 
+    STATUS_CHOICES = [
+        ("PENDING", "Pending"),
+        ("APPROVED", "Approved"),
+        ("DENIED", "Denied"),
+    ]
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="PENDING", blank=True)
+
     def __str__(self):
         return f"{self.user.email} TeacherProfile"
 
