@@ -1,0 +1,13 @@
+.wc-container {
+    position: fixed; 
+    bottom: 1.5rem;   
+    right: 1.5rem;    /* Distance from the right edge of the page */
+    z-index: 1000;  /* Ensure it appears above other content */
+  }
+  
+  .wc-img {
+    width: 50px;    /* Width of the icon */
+    height: 50px;   /* Height of the icon */
+    cursor: pointer; /* Change cursor to pointer for better UX */
+  }
+  

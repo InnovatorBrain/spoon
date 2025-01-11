@@ -1,4 +1,11 @@
 export default function Pricing() {
+    const phoneNumber = "923071567799";
+
+    const handleWhatsAppRedirect = () => {
+        const whatsappUrl = `https://wa.me/${phoneNumber}`;
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    };
+
     return (
         <>
             <section className="py-20 bg-gray-100 text-gray-800">
@@ -29,7 +36,10 @@ export default function Pricing() {
                                         <span>Feature 2</span>
                                     </li>
                                 </ul>
-                                <button className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded hover:bg-green-700">
+                                <button
+                                    className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded hover:bg-green-700"
+                                    onClick={handleWhatsAppRedirect}
+                                >
                                     Get Started
                                 </button>
                             </div>
@@ -55,7 +65,10 @@ export default function Pricing() {
                                         <span>Additional Pro Features</span>
                                     </li>
                                 </ul>
-                                <button className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded hover:bg-green-700">
+                                <button
+                                    className="w-full px-4 py-2 font-semibold text-white bg-green-600 rounded hover:bg-green-700"
+                                    onClick={handleWhatsAppRedirect}
+                                >
                                     Get Started
                                 </button>
                             </div>

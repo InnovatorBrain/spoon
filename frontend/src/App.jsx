@@ -10,6 +10,8 @@ import Company from './pages/Company';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import PrivateRoutes from './PrivateRoute';
+import Wc from './components/Wc';
+
 
 
 function App() {
@@ -20,17 +22,17 @@ function App() {
         <Navbar />
         <Routes>
           {/* Athenticated Users */}
-        <Route element={<PrivateRoutes />}>
-          <Route path="/dashboard" element={<div className="Dashboard-main-container">okies</div>} />
-          <Route path='/student-pro' element={<StudentProfile />} />
-          <Route path='/teacher-pro' element={<><TeacherProfile /></>} />
-        </Route>
-          <Route path='/' element={<Home />} />
-          <Route path='/see-teachers' element={<See_teachers />} />
-          <Route path='/pricing' element={<Pricing />} />
-          <Route path='/company' element={<Company />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/login' element={<Login />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/dashboard" element={<div className="Dashboard-main-container">okies</div>} />
+            <Route path='/student-pro' element={<><StudentProfile /><Wc /></>} />
+            <Route path='/teacher-pro' element={<><TeacherProfile /><Wc /></>} />
+          </Route>
+          <Route path='/' element={<><Home /> <Wc /></>} />
+          <Route path='/see-teachers' element={<><See_teachers /><Wc /></>} />
+          <Route path='/pricing' element={<><Pricing /><Wc /></>} />
+          <Route path='/company' element={<><Company /><Wc /></>} />
+          <Route path='/signup' element={<><Signup /><Wc /></>} />
+          <Route path='/login' element={<><Login /><Wc /></>} />
 
         </Routes>
         <Footer />
