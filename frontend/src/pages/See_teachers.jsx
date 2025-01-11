@@ -26,14 +26,16 @@ export default function See_teachers() {
           axios.get('http://127.0.0.1:8000/asd/teacher-images/')
         ]);
 
+        // Mapping images to the teachers based on custom_user ID
         const imagesMap = imagesResponse.data.reduce((map, image) => {
-          map[image.custom_user] = `http://127.0.0.1:8000${image.image}`;
+          map[image.custom_user] = `http://127.0.0.1:8000/asd${image.image}`; // Ensure proper URL formatting
           return map;
         }, {});
 
+        // Combining teacher data with image URLs
         const teachersWithImages = teachersResponse.data.map(teacher => ({
           ...teacher,
-          image: imagesMap[teacher.id] || 'https://via.placeholder.com/150'
+          image: imagesMap[teacher.id] || 'https://via.placeholder.com/150' // Fallback to placeholder image if none found
         }));
 
         setTeachers(teachersWithImages);
@@ -86,7 +88,8 @@ export default function See_teachers() {
                         src={teacher.image}
                         className="rounded-circle"
                         fluid
-                        style={{ width: '100px' }}
+                        style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                        alt={`${teacher.user_first_name} ${teacher.user_last_name}`}
                       />
                     </div>
                     <MDBTypography tag="h4">

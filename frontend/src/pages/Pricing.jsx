@@ -1,5 +1,5 @@
 export default function Pricing() {
-    const phoneNumber = "923071567799";
+    const phoneNumber = "923030122235";
 
     const handleWhatsAppRedirect = () => {
         const whatsappUrl = `https://wa.me/${phoneNumber}`;

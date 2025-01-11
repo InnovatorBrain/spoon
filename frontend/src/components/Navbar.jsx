@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Fragment, useState } from 'react'
 import {
     Dialog,
@@ -126,6 +127,36 @@ const navigation = {
 }
 export default function Navbar() {
     const [open, setOpen] = useState(false)
+    const handleProfileClick = async () => {
+        try {
+            const token = localStorage.getItem('accessToken');
+            if (token) {
+                axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                const response = await axios.get('http://127.0.0.1:8000/asd/profile/');
+                console.log('Profile Data:', response.data);
+                redirectToProfile(response.data);
+            } else {
+                // If not authenticated, navigate to login
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error('Error fetching user profile', error);
+            // Handle error fetching profile data, maybe redirect to a default route
+        }
+    };
+
+    const redirectToProfile = (userData) => {
+        if (userData.student_profile) {
+            window.location.href = '/student-pro';
+        } else if (userData.teacher_profile) {
+            window.location.href = '/teacher-pro';
+        } else {
+            // If user has no specific profile type, you may want to handle this case
+            console.error('User has no specific profile type');
+            window.location.href = '/login';
+        }
+    };
+
     return (
         <>
             <div className="bg-[#fff] relative z-40 font-sans font-serif text-lg sticky top-0 shadow-md  ">
@@ -350,13 +381,14 @@ export default function Navbar() {
 
                                 <div className="ml-auto flex items-center">
                                     <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link
-                                            to="/login"
+                                        <Link
+                                            to="" onClick={handleProfileClick}
                                             className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-800 bg-opacity-10 flex items-center group"
                                         >
                                             <span className="mr-2">Login</span>
-                                            
+
                                         </Link>
+                            
                                         <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
                                         <Link
                                             to="/signup"

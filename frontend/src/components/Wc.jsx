@@ -3,7 +3,7 @@ import './Wc.css'
 import whatsappicon from '../assets/whatsapp_icon.png';
 
 const Wc = () => {
-    const phoneNumber = "923071567799";
+    const phoneNumber = "923030122235";
 
     return (
         <div className='wc-container'>
