@@ -152,8 +152,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",  # Path to the static files
 ]
 
-MEDIA_URL = '/media/'  # URL for media files
-MEDIA_ROOT = BASE_DIR / 'media'  # Directory where media files will be stored
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build/static'),

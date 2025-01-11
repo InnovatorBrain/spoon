@@ -1,60 +1,123 @@
+import React, { useState } from "react";
+import apiClient from './ApiClient'; // Importing the custom Axios instance
 
 export default function Login() {
-  return (
-    <div className="border-r-8 bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-6">
-    <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img className="mx-auto h-10 w-auto" src="https://www.svgrepo.com/show/301692/login.svg" alt="Workflow" />
-        <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
-            Login With Your Details
-        </h2>
-        <p className="mt-2 text-center text-sm leading-5 text-blue-500 max-w">
-            Or
-            <a
-                href="/signup"
-                className="ml-2 font-medium text-blue-500 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-            >
-                Create An Account
-            </a>
-        </p>
-    </div>
+    const [formData, setFormData] = useState({
+        username: "",
+        password: ""
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await apiClient.post('/asd/login/', formData);
+            console.log(response); 
+        if (response.status === 200) {
+            localStorage.setItem('accessToken', response.data.token.access);
+            localStorage.setItem('refreshToken', response.data.token.refresh);
+            window.location.href = '/teacher-pro';
+        } else {
+            setError('Login failed. Please try again.');
+        }
+    } catch (error) {
+        console.error('Login failed:', error); 
+        setError('Login failed. Please try again.');
+    }
+};
 
 
-    <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form>
+    return (
+        <div className="border-r-8 bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-6">
+            {/* Header */}
+            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                <img
+                    className="mx-auto h-10 w-auto"
+                    src="https://www.svgrepo.com/show/301692/login.svg"
+                    alt="Workflow"
+                />
+                <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+                    Sign in to your Account
+                </h2>
+                <p className="mt-2 text-center text-sm leading-5 text-blue-500 max-w">
+                    Or
+                    <a
+                        href="/signup"
+                        className="ml-2 font-medium text-blue-500 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+                    >
+                        Create a new Account
+                    </a>
+                </p>
+            </div>
 
-                {/* email  */}
-                <div>
-                    <label for="email" className="block text-sm font-medium leading-5  text-gray-700">Email address</label>
-                    <div className="mt-1 relative rounded-md shadow-sm">
-                        <input id="email" name="email" placeholder="user@example.com" type="email" required="" value="" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                        <div className="hidden absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd"
-                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+            {/* Form */}
+            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                    <form onSubmit={handleSubmit}>
+
+                        <div>
+                            <label
+                                htmlFor="username"
+                                className="block text-sm font-medium leading-5 text-gray-700"
+                            >
+                                Email Address
+                            </label>
+                            <input
+                                id="username"
+                                name="username"
+                                placeholder="faizy111@gmail.com"
+                                type="email"
+                                required
+                                value={formData.username}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-300 sm:text-sm"
+                            />
                         </div>
-                    </div>
-                </div>
-                {/* password  */}
-                <div className="">
-                    <label for="password" className="block text-sm font-medium leading-5 text-gray-700">Password</label>
-                    <div className="mt-1 rounded-md shadow-sm">
-                        <input id="password" name="password" type="password" required="" className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                    </div>
-                </div>                
-                <div className="mt-6">
-                    <span className="block w-full rounded-md shadow-sm">
-                        <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            Login
-                        </button>
-                    </span>
-                </div>
-            </form>
 
+                        <div>
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium leading-5 text-gray-700"
+                            >
+                                Password
+                            </label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-300 sm:text-sm"
+                            />
+                            <a
+                                href="/forgot-password"
+                                className="mt-2 text-sm font-medium text-blue-500 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+                            >
+                                Forgot Password?
+                            </a>
+                        </div>
+
+                        {/* Submit Button */}
+                        <div className="mt-6">
+                            <button
+                                type="submit"
+                                className="w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:shadow-outline focus:border-blue-300 transition duration-150"
+                            >
+                                Log In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-  )
+    );
 }
